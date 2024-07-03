@@ -12,7 +12,7 @@
 
 ![](./public/image/screen.png)
 
-## View live preview [here]().
+## View live preview [here](https://developer-portfolio-five-zeta.vercel.app/).
 
 ---
 
