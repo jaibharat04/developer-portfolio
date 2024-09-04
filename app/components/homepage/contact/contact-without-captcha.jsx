@@ -8,24 +8,25 @@ import { toast } from 'react-toastify';
 
 function ContactWithoutCaptcha() {
   const [input, setInput] = useState({
-    name: '',
-    email: '',
+    from_name: '', // Ensure this matches your EmailJS template variable
+    from_email: '', // Ensure this matches your EmailJS template variable
     message: '',
   });
+
   const [error, setError] = useState({
     email: false,
     required: false,
   });
 
   const checkRequired = () => {
-    if (input.email && input.message && input.name) {
+    if (input.from_name && input.from_email && input.message) {
       setError({ ...error, required: false });
     }
   };
 
   const handleSendMail = async (e) => {
     e.preventDefault();
-    if (!input.email || !input.message || !input.name) {
+    if (!input.from_name || !input.from_email || !input.message) {
       setError({ ...error, required: true });
       return;
     } else if (error.email) {
@@ -44,8 +45,8 @@ function ContactWithoutCaptcha() {
       if (res.status === 200) {
         toast.success('Message sent successfully!');
         setInput({
-          name: '',
-          email: '',
+          from_name: '',
+          from_email: '',
           message: '',
         });
       };
@@ -70,11 +71,11 @@ function ContactWithoutCaptcha() {
               className="bg-[#10172d] w-full border rounded-md border-[#353a52] focus:border-[#16f2b3] ring-0 outline-0 transition-all duration-300 px-3 py-2"
               type="text"
               maxLength="100"
-              name= "to_name"
+              name= "from_name"
               required={true}
-              onChange={(e) => setInput({ ...input, name: e.target.value })}
+              onChange={(e) => setInput({ ...input, from_name: e.target.value })}
               onBlur={checkRequired}
-              value={input.name}
+              value={input.from_name}
             />
           </div>
 
@@ -84,13 +85,13 @@ function ContactWithoutCaptcha() {
               className="bg-[#10172d] w-full border rounded-md border-[#353a52] focus:border-[#16f2b3] ring-0 outline-0 transition-all duration-300 px-3 py-2"
               type="email"
               maxLength="100"
-              name= "from_name"
+              name= "from_email"
               required={true}
-              value={input.email}
-              onChange={(e) => setInput({ ...input, email: e.target.value })}
+              value={input.from_email}
+              onChange={(e) => setInput({ ...input, from_email: e.target.value })}
               onBlur={() => {
                 checkRequired();
-                setError({ ...error, email: !isValidEmail(input.email) });
+                setError({ ...error, email: !isValidEmail(input.from_email) });
               }}
             />
             {error.email &&
@@ -114,7 +115,7 @@ function ContactWithoutCaptcha() {
           <div className="flex flex-col items-center gap-2">
             {error.required &&
               <p className="text-sm text-red-400">
-                Email and Message are required!
+                Name, Email, and Message are required!
               </p>
             }
             <button
